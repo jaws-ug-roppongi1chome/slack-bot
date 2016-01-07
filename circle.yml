@@ -1,0 +1,14 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker info
+    - docker version
+  override:
+    - docker pull pottava/sphinx
+
+test:
+  override:
+    - docker run -v $(pwd)/doc:/doc -w /doc pottava/sphinx /bin/sh -c "make clean && make html"
